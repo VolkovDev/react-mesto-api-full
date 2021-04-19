@@ -1,0 +1,8 @@
+@media screen and (max-width: 425px) {
+  .pop-up__btn-close_type_profile {
+    width: 26px;
+    height: 26px;
+    top: -38px;
+    right: 18px;
+  }
+}

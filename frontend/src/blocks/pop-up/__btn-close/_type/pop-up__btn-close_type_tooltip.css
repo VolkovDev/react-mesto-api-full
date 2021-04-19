@@ -1,0 +1,15 @@
+.pop-up__btn-close_type_tooltip {
+  top: -36px;
+  right: -38px;
+  margin-left: auto;
+  background-size: 170%;
+}
+
+@media screen and (max-width: 425px) {
+  .pop-up__btn-close_type_tooltip {
+    width: 30px;
+    height: 30px;
+    top: -45px;
+    right: 46%;
+  }
+}

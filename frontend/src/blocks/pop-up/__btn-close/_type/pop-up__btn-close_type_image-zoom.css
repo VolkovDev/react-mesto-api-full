@@ -1,0 +1,19 @@
+.pop-up__btn-close_type_image-zoom {
+  top: -36px;
+  right: -38px;
+  margin-left: auto;
+  background-size: 170%;
+}
+
+.pop-up__btn-close_type_image-zoom:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 425px) {
+  .pop-up__btn-close_type_image-zoom {
+    width: 30px;
+    height: 30px;
+    top: -32px;
+    right: -13px;
+  }
+}

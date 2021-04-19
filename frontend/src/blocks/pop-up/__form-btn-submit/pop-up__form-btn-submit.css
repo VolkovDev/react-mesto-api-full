@@ -1,0 +1,36 @@
+.pop-up__form-btn-submit {
+  max-width: 358px;
+  margin: 0 8.3%;
+  margin-top: 48px;
+  min-height: 50px;
+  background: #000;
+  color: #fff;
+  padding: 0;
+  border-radius: 2px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+.pop-up__form-btn-submit:hover {
+  background: rgba(0, 0, 0, .8);
+}
+
+.pop-up__form-btn-submit:disabled {
+  background-color: transparent;
+  color: rgba(0, 0, 0, .2);
+  cursor: default;
+}
+
+@media screen and (max-width: 425px) {
+  .pop-up__form-btn-submit {
+    margin-right: 22px;
+    margin-left: 22px;
+  }
+}

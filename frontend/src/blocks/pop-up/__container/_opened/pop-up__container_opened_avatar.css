@@ -1,0 +1,6 @@
+.pop-up__container_opened_avatar {
+  min-width: 240px;
+  flex-basis: 430px;
+  padding: 0 40px;
+  transition: all .42s ease-in-out;
+}

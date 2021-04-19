@@ -1,0 +1,12 @@
+.pop-up__container_opened_profile {
+  min-width: 282px;
+  flex-basis: 430px;
+  padding: 0 40px;
+  transition: all .42s ease-in-out;
+}
+
+@media screen and (max-width: 420px) {
+  .pop-up__container_opened_profile {
+    padding: 0px 19px;
+  }
+}

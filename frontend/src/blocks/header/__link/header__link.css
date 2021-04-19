@@ -1,0 +1,16 @@
+.header__link {
+  display: block;
+  margin-bottom: 40px;
+  width: fit-content;
+  height: fit-content;
+  transition: opacity .42s ease;
+}
+
+.header__link:hover {
+  opacity: .6;
+}
+@media screen and (max-width: 425px) {
+  .header__link {
+    margin-bottom: 28px;
+  }
+}

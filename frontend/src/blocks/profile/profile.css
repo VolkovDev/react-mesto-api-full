@@ -1,0 +1,27 @@
+.profile {
+  margin: 0 auto;
+  width: calc(100% - 31%);
+  padding-top: 40px;
+  display: grid;
+  grid-template-columns: 150px max-content 1fr;
+  grid-template-rows: 60px 60px;
+}
+
+@media screen and (max-width: 1275px) {
+  .profile {
+    width: calc(100% - 150px);
+  }
+}
+@media screen and (max-width: 980px) {
+  .profile {
+    width: calc(100% - 100px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    width: calc(100% - 19px * 2);
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, max-content);
+  }
+}
