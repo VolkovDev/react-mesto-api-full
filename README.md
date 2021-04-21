@@ -1,6 +1,6 @@
 # react-mesto-api-full
 Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
   
-  # **"[avolk.ru](https://avolk.ru)" — frontend **
-  # **"[api.avolk.ru](https://api.avolk.ru)" — backend **
+  ### [avolk.ru](https://avolk.ru)" — frontend
+  ### [api.avolk.ru](https://api.avolk.ru)" — backend
 
