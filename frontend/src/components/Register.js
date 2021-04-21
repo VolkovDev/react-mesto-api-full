@@ -23,7 +23,7 @@ const Register = ({ setIsRegisterPopupOpen, setOnFail }) => {
         }
       })
       .catch((err) => {
-        console.log(err => `Error handleSubmit register: ${err}`)
+        console.log(`Error handleSubmit register: ${err}`)
       })
   }
 
