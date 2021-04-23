@@ -20,7 +20,7 @@ router.delete('/cards/:cardId', auth, validationCardId, deleteCard);
 
 router.put('/cards/:cardId/likes', auth, validationCardId, likeCard);
 
-router.delete('/cards/:cardId/likes', auth, validationCardId, auth, dislikeCard);
+router.delete('/cards/:cardId/likes', auth, validationCardId, dislikeCard);
 
 module.exports = {
   router,

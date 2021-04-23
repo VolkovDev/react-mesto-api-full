@@ -1,7 +1,7 @@
 import React from 'react'
-import {useState, useContext} from 'react'
+import {useState} from 'react'
 import PopupWithForm from './PopupWithForm'
-import {CurrentUserContext} from "../contexts/CurrentUserContext"
+// import {CurrentUserContext} from "../contexts/CurrentUserContext"
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }){
   // const currentUser = useContext(CurrentUserContext)

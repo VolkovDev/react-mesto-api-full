@@ -31,7 +31,6 @@ class Api {
   }
 
   patchEditProfile({ name, about }) {
-    console.log('editProfile this._token: ', this._token)
     return fetch(`${this._adress}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -48,7 +47,7 @@ class Api {
 
   postAddNewCard({ name, link }) {
     return fetch(`${this._adress}/cards`, {
-      method: 'post',
+      method: 'POST',
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'
@@ -74,7 +73,7 @@ class Api {
 
   putHandlerLike(_id, isLiked) {
     if (isLiked) {
-      return fetch(`${this._adress}/cards/likes/${_id}`, {
+      return fetch(`${this._adress}/cards/${_id}/likes`, {
         method: 'PUT',
         headers: {
           authorization: this._token,
@@ -83,7 +82,7 @@ class Api {
       })
         .then(this._headerResponse)
     } else {
-      return fetch(`${this._adress}/cards/likes/${_id}`, {
+      return fetch(`${this._adress}/cards/${_id}/likes`, {
         method: 'DELETE',
         headers: {
           authorization: this._token,

@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function Card({card, onCardClick, onCardImageClick, onCardLike, onCardDelete, loadingIndicator}) {
-  const currentUser  = React.useContext(CurrentUserContext);
+  const currentUser  = useContext(CurrentUserContext);
   
   function handleClick() {
     onCardClick(card);
@@ -17,9 +17,8 @@ function Card({card, onCardClick, onCardImageClick, onCardLike, onCardDelete, lo
     onCardDelete(card)
   }
 
-
   // Определяем, являемся ли мы владельцем текущей карточки
-const isOwn = card.owner._id === currentUser._id;
+const isOwn = card.owner === currentUser._id;
 
 // Создаём переменную, которую после зададим в `className` для кнопки удаления
 const cardDeleteButtonClassName = (
@@ -27,7 +26,7 @@ const cardDeleteButtonClassName = (
 );
 
 // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-const isLiked = card.likes.some(i => i._id === currentUser._id);
+const isLiked = card.likes.some(i => i === currentUser._id);
 
 // Создаём переменную, которую после зададим в `className` для кнопки лайка
 const cardLikeButtonClassName = (
@@ -72,7 +71,7 @@ const cardLikeButtonClassName = (
             <div 
               className="card__like-counter"
             > {
-              card.likes.length ? card.likes.length : '0'
+              card.likes.length
               }
             </div>
           </div>
