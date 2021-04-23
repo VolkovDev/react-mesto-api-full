@@ -16,7 +16,7 @@ module.exports.validationUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required()
       .error(new Joi.ValidationError('Неправильное имя')),
-    about: Joi.string().min(2).required()
+    about: Joi.string().min(2).max(30).required()
       .error(new Joi.ValidationError('Неверно о себе')),
   }).unknown(true),
 });
@@ -55,7 +55,7 @@ module.exports.validationSigIn = celebrate({
 module.exports.validationCardId = celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().hex().length(24).required()
-      .alphanum()
+      .hex()
       .error(new Joi.ValidationError('Неверный cardId')),
   }).unknown(true),
 });
@@ -63,7 +63,7 @@ module.exports.validationCardId = celebrate({
 module.exports.validationId = celebrate({
   params: Joi.object().keys({
     id: Joi.string().hex().length(24).required()
-      .alphanum()
+      .hex()
       .error(new Joi.ValidationError('Неверный Id')),
   }).unknown(true),
 });

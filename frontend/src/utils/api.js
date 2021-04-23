@@ -1,5 +1,6 @@
 class Api {
   constructor({ adress, token, }) {
+    console.log('Api token: ', token)
     this._adress = adress
     this._token = token
   }
@@ -29,7 +30,8 @@ class Api {
       .then(this._headerResponse)
   }
 
-  patchEditProfile({name, about}) {
+  patchEditProfile({ name, about }) {
+    console.log('editProfile this._token: ', this._token)
     return fetch(`${this._adress}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -89,11 +91,10 @@ class Api {
         },
       })
         .then(this._headerResponse)
-}
-
     }
+  }
 
-  patchRefreshAvatar({avatar}) {
+  patchRefreshAvatar({ avatar }) {
     return fetch(`${this._adress}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -109,8 +110,8 @@ class Api {
 }
 
 const api = new Api({
-  adress: 'https://mesto.nomoreparties.co/v1/cohort-19',
-  token: 'f72c8d0b-5fc2-4db7-9b50-05d59d520549'
+  adress: 'https://api.avolk.ru',
+  token: `Bearer ${localStorage.getItem('jwt')}`,
 })
 
 export default api

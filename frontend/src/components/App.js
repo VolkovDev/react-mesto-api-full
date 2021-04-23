@@ -47,6 +47,7 @@ function App() {
           if (res) {
             setLoggedIn(true)
             setUserEmail(res.email)
+            setCurrentUser(res)
             history.push('/main')
           }
         })
@@ -69,7 +70,7 @@ function App() {
     about: '',
     avatar: '',
     _id: '',
-    cohort: ''
+    email: '',
   })
 
 
