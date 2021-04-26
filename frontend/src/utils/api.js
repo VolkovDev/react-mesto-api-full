@@ -4,19 +4,23 @@ class Api {
   constructor(apiData) {
     console.log('Api token: ', apiData.token)
     this._adress = apiData.adress
-    this._token = apiData.token
+    // this._getTokenFromLocalStorege() = apiData.token
   }
 
   _headerResponse = (res) => {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  _getTokenFromLocalStorege () {
+    return localStorage.getItem('jwt')
+  }
+
   getInfoUser() {
-    console.log('Токен получения данных юзера getInfoUser: ',  this._token)
+    console.log('Токен получения данных юзера getInfoUser: ',  this._getTokenFromLocalStorege())
     return fetch(`${this._adress}/users/me`, {
       method: 'GET',
       headers: {
-        authorization: this._token,
+        authorization: this._getTokenFromLocalStorege(),
         'Content-Type': 'application/json'
       }
     })
@@ -24,10 +28,10 @@ class Api {
   }
 
   getInitialCards() {
-    console.log('Токен получения данных карточек getInitialCards: ',  this._token)
+    console.log('Токен получения данных карточек getInitialCards: ',  this._getTokenFromLocalStorege())
     return fetch(`${this._adress}/cards`, {
       headers: {
-        authorization: this._token,
+        authorization: this._getTokenFromLocalStorege(),
         'Content-Type': 'application/json'
       }
     })
@@ -42,7 +46,7 @@ class Api {
     return fetch(`${this._adress}/users/me`, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
+        authorization: this._getTokenFromLocalStorege(),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -57,7 +61,7 @@ class Api {
     return fetch(`${this._adress}/cards`, {
       method: 'POST',
       headers: {
-        authorization: this._token,
+        authorization: this._getTokenFromLocalStorege(),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -72,7 +76,7 @@ class Api {
     return fetch(`${this._adress}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
-        authorization: this._token,
+        authorization: this._getTokenFromLocalStorege(),
         'Content-Type': 'application/json'
       },
     })
@@ -84,7 +88,7 @@ class Api {
       return fetch(`${this._adress}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: {
-          authorization: this._token,
+          authorization: this._getTokenFromLocalStorege(),
           'Content-Type': 'application/json'
         },
       })
@@ -93,7 +97,7 @@ class Api {
       return fetch(`${this._adress}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: {
-          authorization: this._token,
+          authorization: this._getTokenFromLocalStorege(),
           'Content-Type': 'application/json'
         },
       })
@@ -102,11 +106,11 @@ class Api {
   }
 
   patchRefreshAvatar({ avatar }) {
-    console.log('patchRefreshAvatar API: ', this._token)
+    console.log('patchRefreshAvatar API: ', this._getTokenFromLocalStorege())
     return fetch(`${this._adress}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
+        authorization: this._getTokenFromLocalStorege(),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
