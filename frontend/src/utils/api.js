@@ -2,9 +2,7 @@ import apiData from './constants'
 
 class Api {
   constructor(apiData) {
-    console.log('Api token: ', apiData.token)
     this._adress = apiData.adress
-    // this._getTokenFromLocalStorege() = apiData.token
   }
 
   _headerResponse = (res) => {
@@ -12,7 +10,7 @@ class Api {
   }
 
   _getTokenFromLocalStorege () {
-    return localStorage.getItem('jwt')
+    return `Bearer ${localStorage.getItem('jwt')}`
   }
 
   getInfoUser() {
