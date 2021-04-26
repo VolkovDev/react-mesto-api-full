@@ -14,7 +14,6 @@ class Api {
   }
 
   getInfoUser() {
-    console.log('Токен получения данных юзера getInfoUser: ',  this._getTokenFromLocalStorege())
     return fetch(`${this._adress}/users/me`, {
       method: 'GET',
       headers: {
@@ -26,7 +25,6 @@ class Api {
   }
 
   getInitialCards() {
-    console.log('Токен получения данных карточек getInitialCards: ',  this._getTokenFromLocalStorege())
     return fetch(`${this._adress}/cards`, {
       headers: {
         authorization: this._getTokenFromLocalStorege(),
@@ -104,7 +102,6 @@ class Api {
   }
 
   patchRefreshAvatar({ avatar }) {
-    console.log('patchRefreshAvatar API: ', this._getTokenFromLocalStorege())
     return fetch(`${this._adress}/users/me/avatar`, {
       method: 'PATCH',
       headers: {

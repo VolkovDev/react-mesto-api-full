@@ -51,9 +51,8 @@ function App() {
     if (loggedIn) {
       api.getDataUserAndCards()
         .then((response => {
-          console.log('getDataUserAndCards Token All: ', localStorage.jwt)
           const [userData, cardsData] = response
-          console.log('Получили данные при входе getDataUserAndCards: ', userData)
+          console.log('login getDataUserAndCards: ', userData)
           setCurrentUser(userData)
           setUserEmail(userData.email)
           setCards(cardsData)
@@ -66,11 +65,9 @@ function App() {
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt')
-    console.log('Проверили наличие токена tokenCheck: ', jwt)
     if (jwt) {
       checkToken(jwt)
         .then((data) => {
-          console.log('checkToken DATA: ', data)
           if (data) {
             setUserEmail(data.email)
             setLoggedIn(true)
@@ -86,25 +83,6 @@ function App() {
   useEffect(() => {
     tokenCheck()
   }, [history])
-
-  // useEffect(() => {
-  //   api.getInitialCards()
-  //     .then(initialCards => {
-  //       console.log('getInitialCards: ', initialCards)
-  //       setCards(initialCards)
-  //     })
-  //     .catch(err => console.log(err))
-  // }, [loggedIn])
-
-  // useEffect(() => {
-  //   api.getInfoUser()
-  //     .then(data => {
-  //       console.log('getInfoUser: ', data)
-  //       setCurrentUser(data)
-  //       setUserEmail(data.email)
-  //     })
-  //     .catch(err => console.log(err))
-  // }, [])
 
   const handleLogin = () => {
     setLoggedIn(true)
@@ -198,8 +176,6 @@ function App() {
     setIsLoading(true)
     api.postAddNewCard({ name, link })
       .then((newCard) => {
-        console.log('handleAddPlaceSubmit newCard: ', newCard)
-        console.log('handleAddPlaceSubmit cards: ', cards)
         setCards([newCard, ...cards])
         closeAllPopups()
         setIsLoading(false)
