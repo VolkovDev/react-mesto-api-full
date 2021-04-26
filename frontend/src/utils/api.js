@@ -1,8 +1,10 @@
+import apiData from './constants'
+
 class Api {
-  constructor({ adress, token, }) {
-    console.log('Api token: ', token)
-    this._adress = adress
-    this._token = token
+  constructor(apiData) {
+    console.log('Api token: ', apiData.token)
+    this._adress = apiData.adress
+    this._token = apiData.token
   }
 
   _headerResponse = (res) => {
@@ -10,6 +12,7 @@ class Api {
   }
 
   getInfoUser() {
+    console.log('Токен получения данных юзера getInfoUser: ',  this._token)
     return fetch(`${this._adress}/users/me`, {
       method: 'GET',
       headers: {
@@ -21,6 +24,7 @@ class Api {
   }
 
   getInitialCards() {
+    console.log('Токен получения данных карточек getInitialCards: ',  this._token)
     return fetch(`${this._adress}/cards`, {
       headers: {
         authorization: this._token,
@@ -28,6 +32,10 @@ class Api {
       }
     })
       .then(this._headerResponse)
+  }
+
+  getDataUserAndCards() {
+    return Promise.all([this.getInfoUser(), this.getInitialCards()]);
   }
 
   patchEditProfile({ name, about }) {
@@ -38,8 +46,8 @@ class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name,
-        about
+        name: name,
+        about: about,
       })
     })
       .then(this._headerResponse)
@@ -60,8 +68,8 @@ class Api {
       .then(this._headerResponse)
   }
 
-  deleteCard(_id) {
-    return fetch(`${this._adress}/cards/${_id}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._adress}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._token,
@@ -71,9 +79,9 @@ class Api {
       .then(this._headerResponse)
   }
 
-  putHandlerLike(_id, isLiked) {
+  putHandlerLike(cardId, isLiked) {
     if (isLiked) {
-      return fetch(`${this._adress}/cards/${_id}/likes`, {
+      return fetch(`${this._adress}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: {
           authorization: this._token,
@@ -82,7 +90,7 @@ class Api {
       })
         .then(this._headerResponse)
     } else {
-      return fetch(`${this._adress}/cards/${_id}/likes`, {
+      return fetch(`${this._adress}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: {
           authorization: this._token,
@@ -94,6 +102,7 @@ class Api {
   }
 
   patchRefreshAvatar({ avatar }) {
+    console.log('patchRefreshAvatar API: ', this._token)
     return fetch(`${this._adress}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -101,16 +110,13 @@ class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        avatar
+        avatar: avatar
       })
     })
       .then(this._headerResponse)
   }
 }
 
-const api = new Api({
-  adress: 'https://api.avolk.ru',
-  token: `Bearer ${localStorage.getItem('jwt')}`,
-})
+const api = new Api(apiData)
 
 export default api

@@ -13,7 +13,7 @@ const Register = ({ setIsRegisterPopupOpen, setOnFail }) => {
     console.log('password: ',password, ' email: ', email)
     register( password, email )
       .then((res) => {
-        console.log(res)
+        console.log('handleSubmit: ', res)
         if (res) {
           setIsRegisterPopupOpen(res)
           setOnFail('')

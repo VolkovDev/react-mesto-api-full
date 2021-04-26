@@ -23,7 +23,16 @@ import { checkToken } from '../auth'
 
 function App() {
 
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    about: '',
+    avatar: '',
+    _id: '',
+    email: '',
+  })
+
   const [cards, setCards] = useState([])
+  const [userEmail, setUserEmail] = useState('')
   
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
@@ -32,23 +41,40 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(false)
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
-  const [userEmail, setUserEmail] = useState('')
   const [onFail, setOnFail] = useState('')
   const [isloading, setIsLoading] = useState(false)
   const [isDeleteCardsPopupOpen, SetIsDeleteCardsPopupOpen] = useState(false);
 
   const history = useHistory()
 
+  useEffect(() => {
+    if (loggedIn) {
+      api.getDataUserAndCards()
+        .then((response => {
+          console.log('getDataUserAndCards Token All: ', localStorage.jwt)
+          const [userData, cardsData] = response
+          console.log('Получили данные при входе getDataUserAndCards: ', userData)
+          setCurrentUser(userData)
+          setUserEmail(userData.email)
+          setCards(cardsData)
+        }))
+        .catch((err) => {
+          console.log(err);
+      })
+    }
+  }, [loggedIn])
+
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt')
+    console.log('Проверили наличие токена tokenCheck: ', jwt)
     if (jwt) {
       checkToken(jwt)
-        .then((res) => {
-          if (res) {
+        .then((data) => {
+          console.log('checkToken DATA: ', data)
+          if (data) {
+            setUserEmail(data.email)
             setLoggedIn(true)
-            setUserEmail(res.email)
-            setCurrentUser(res)
-            history.push('/main')
+            history.push('/')
           }
         })
         .catch((err) => {
@@ -59,20 +85,30 @@ function App() {
 
   useEffect(() => {
     tokenCheck()
-  }, [loggedIn, history])
+  }, [history])
+
+  // useEffect(() => {
+  //   api.getInitialCards()
+  //     .then(initialCards => {
+  //       console.log('getInitialCards: ', initialCards)
+  //       setCards(initialCards)
+  //     })
+  //     .catch(err => console.log(err))
+  // }, [loggedIn])
+
+  // useEffect(() => {
+  //   api.getInfoUser()
+  //     .then(data => {
+  //       console.log('getInfoUser: ', data)
+  //       setCurrentUser(data)
+  //       setUserEmail(data.email)
+  //     })
+  //     .catch(err => console.log(err))
+  // }, [])
 
   const handleLogin = () => {
     setLoggedIn(true)
   }
-
-  const [currentUser, setCurrentUser] = useState({
-    name: '',
-    about: '',
-    avatar: '',
-    _id: '',
-    email: '',
-  })
-
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -162,9 +198,9 @@ function App() {
     setIsLoading(true)
     api.postAddNewCard({ name, link })
       .then((newCard) => {
-        console.log('handleAddPlaceSubmit newCard: ', newCard.data)
+        console.log('handleAddPlaceSubmit newCard: ', newCard)
         console.log('handleAddPlaceSubmit cards: ', cards)
-        setCards([newCard.data, ...cards])
+        setCards([newCard, ...cards])
         closeAllPopups()
         setIsLoading(false)
       })
@@ -172,26 +208,12 @@ function App() {
   }
 
   function handleLogout() {
+    localStorage.removeItem('jwt');
     setLoggedIn(false)
+    setUserEmail('')
+    history.push('/signin')
+    console.log('handleLogout: ', currentUser)
   }
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then(initialCards => {
-        console.log('getInitialCards: ', initialCards)
-        setCards(initialCards)
-      })
-      .catch(err => console.log(err))
-  }, [])
-
-  useEffect(() => {
-    api.getInfoUser()
-      .then(data => {
-        console.log('getInfoUser: ', data)
-        setCurrentUser(data)
-      })
-      .catch(err => console.log(err))
-  }, [])
 
   useEffect(() => {
     function handleEscClose(evt) {
@@ -213,20 +235,25 @@ function App() {
 
         <Header userEmail={userEmail} onQuit={handleLogout} />
             <Switch>
-            <ProtectedRoute
-                path='/main'
-                loggedIn={loggedIn}
-                component={Main}
-                loadingIndicator={isloading}
-                onEditAvatar={handleEditAvatarClick}
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onCardClick={handleCardClick}
-                onCardImageClick={handleCardImageClick}
-                cards={cards}
-                onCardLike={handleCardLike}
-                onCardDelete={onHandleCardDelete}
-            />
+              <Route exact path="/"> 
+                {loggedIn ? <Redirect to='/' /> : <Redirect to='/signin' />}
+                  <ProtectedRoute
+                      exact
+                      path='/'
+                      loggedIn={loggedIn}
+                      component={Main}
+                      loadingIndicator={isloading}
+                      onEditAvatar={handleEditAvatarClick}
+                      onEditProfile={handleEditProfileClick}
+                      onAddPlace={handleAddPlaceClick}
+                      onCardClick={handleCardClick}
+                      onCardImageClick={handleCardImageClick}
+                      cards={cards}
+                      onCardLike={handleCardLike}
+                      onCardDelete={onHandleCardDelete}
+                  />
+              </Route>
+            
               <Route path='/signup'>
                 <Register
                   setIsRegisterPopupOpen={setIsRegisterPopupOpen}
@@ -236,9 +263,6 @@ function App() {
               </Route>
               <Route path='/signin'>
                 <Login handleLogin={handleLogin} onFail={onFail} setOnFail={setOnFail} />
-              </Route>
-              <Route>
-                {loggedIn ? <Redirect to='/main' /> : <Redirect to='/signin' />}
               </Route>
             </Switch>
           < Footer />

@@ -23,10 +23,12 @@ function Login({ handleLogin, onFail, setOnFail }) {
     authorize( password, email )
       .then((data) => {
         if (data.token) {
+          // setEmail(email)
           resetForm()
+          localStorage.setItem('jwt', data.token) 
           handleLogin()
           setOnFail('')
-          history.push('/main')
+          history.push('/')
         } else if (data.message) {
           setOnFail(data.message)
         }
